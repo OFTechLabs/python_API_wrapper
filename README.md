@@ -11,6 +11,7 @@ The folder structure for this project is as follows:
     ├── .github                 # Github specific files (Github Actions workflows)
     ├── app                     # FastAPI app files for the API endpoints
         ├── model               # App engine
+            └── model.pickle    # Your model saved as pickle file
         └── main.py             # Definition HTTP methods
     ├── config                  # Configuration of NGINX in docker container
     ├── docs                    # Sphinx documentation files (workflow builds html)
