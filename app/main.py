@@ -36,7 +36,14 @@ class Output(BaseModel):
     predicted_name: str
 
 
-@app.post("/result/", response_model=Output)
+@app.get("/print_flower/", response_model=Input)
+def print_flower() -> Input:
+    flower = Input(sepal_length=1.0, sepal_width=2.0, petal_length=3.0, petal_width=4.0)
+    print(flower)
+    return flower
+
+
+@app.post("/predict/", response_model=Output)
 def predict(flower: Input) -> Output:
     return Output(predicted_class=flower.predict_class(model),
                   predicted_name=flower.predict_name(model))
