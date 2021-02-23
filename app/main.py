@@ -20,26 +20,29 @@ app = FastAPI(
 mimetypes.init()
 
 file_path = os.path.dirname(__file__)
-
 MODEL_DIR = os.path.join("model")
 MODEL_NAME = "DecisionTreeClassifier"
-
 path = os.path.join(file_path, MODEL_DIR, MODEL_NAME + ".pickle")
 
 model = pickle.load(open(path, "rb"))
 
 
+class Input(BaseModel, Flower):
+    sepal_length: float
+    sepal_width: float
+    petal_length: float
+    petal_width: float
 
 
-class Prediction(BaseModel):
+class Output(BaseModel):
     predicted_class: int
     predicted_name: str
 
 
-@app.post("/predict/", response_model=Prediction)
-def predict_model(flower: Flower) -> Prediction:
-    return Prediction(predicted_class=flower.predict_flower_class(model),
-                      predicted_name=flower.predict_flower_name(model))
+@app.post("/result/", response_model=Output)
+def predict(flower: Input) -> Output:
+    return Output(predicted_class=flower.predict_class(model),
+                  predicted_name=flower.predict_name(model))
 
 
 if __name__ == "__main__":
