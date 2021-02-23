@@ -59,7 +59,3 @@ class Output(BaseModel):
 def predict(flower: Input) -> Output:
     return Output(predicted_class=flower.predict_class(model),
                   predicted_name=flower.predict_name(model))
-
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=80, log_level="info", reload=True)
