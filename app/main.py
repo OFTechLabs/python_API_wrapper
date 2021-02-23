@@ -1,9 +1,8 @@
-from typing import List, Optional, Dict
 import uvicorn
 import os
 import pickle
 
-from fastapi import FastAPI, Body
+from fastapi import FastAPI
 from pydantic import BaseModel
 import mimetypes
 
@@ -20,10 +19,9 @@ app = FastAPI(
 mimetypes.init()
 
 file_path = os.path.dirname(__file__)
-MODEL_DIR = os.path.join("model")
-MODEL_NAME = "DecisionTreeClassifier"
-path = os.path.join(file_path, MODEL_DIR, MODEL_NAME + ".pickle")
-
+model_dir = os.path.join("model")
+model_name = "DecisionTreeClassifier"
+path = os.path.join(file_path, model_dir, model_name+".pickle")
 model = pickle.load(open(path, "rb"))
 
 
@@ -46,4 +44,4 @@ def predict(flower: Input) -> Output:
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=5000, log_level="info", reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=80, log_level="info", reload=True)
