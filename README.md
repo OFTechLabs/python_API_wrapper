@@ -9,7 +9,6 @@ The folder structure for this project is as follows:
         ├── model               # App engine
             └── model.pickle    # Your model saved as pickle file  
         └── main.py             # Definition HTTP methods
-    └── config                  # Configuration of NGINX in docker container
 
 
 ### Locally
