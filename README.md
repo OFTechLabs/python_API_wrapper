@@ -16,16 +16,16 @@ The folder structure for this project is as follows:
     ├── config                  # Configuration of NGINX in docker container
 
 ## Deployment
-To deploy your app locally or on Amazon Web Services, follow the instructions below. For distribution purposes, it is convenient to link this GitHub repository to a DockerHub repository where you can store an image of your app that others can access directly. Follow [these instructions](https://docs.docker.com/docker-hub/builds/) to setup automated image building on DockerHub, based on changes to your GitHub repository, e.g. pushes to the master branch. 
+To deploy your app locally, follow the instructions below. For distribution purposes, it is convenient to link this GitHub repository to a DockerHub repository where you can store an image of your app that others can access directly. Follow [these instructions](https://docs.docker.com/docker-hub/builds/) to setup automated image building on DockerHub, based on changes to your GitHub repository, e.g. pushes to the master branch. 
 
 ### Locally
 In order to run the docker container locally on non-Linux machines one needs to install [Docker Desktop](https://www.docker.com/products/docker-desktop) available for Mac and Windows.  
 
 
-In order to spin up a locally built version, navigate to the directory containing "docker-compose.yml" and run:
+In order to build and spin up the API locally, navigate to the directory containing "docker-compose.yml" and run:
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
-The API swagger documentation should now be available at [http://localhost:5000/docs/](http://localhost:5000/docs/).
+The API swagger documentation should become available at [http://localhost:8000/docs/](http://localhost:5000/docs/).

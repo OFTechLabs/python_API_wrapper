@@ -5,9 +5,6 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import mimetypes
 
-from app.model.Flower import Flower
-
-
 app = FastAPI(
     title="App deployment as a microservice",
     description="This project helps you to setup your Python application as a microservice, by hosting it"
@@ -17,33 +14,38 @@ app = FastAPI(
 
 mimetypes.init()
 
-file_path = os.path.dirname(__file__)
-model_dir = os.path.join("model")
-model_name = "DecisionTreeClassifier"
-path = os.path.join(file_path, model_dir, model_name+".pickle")
-model = pickle.load(open(path, "rb"))
+FILE_PATH = os.path.dirname(__file__)
+MODEL_DIR = os.path.join("model")
+MODEL_NAME = "DecisionTreeClassifier"
+PATH = os.path.join(FILE_PATH, MODEL_DIR, MODEL_NAME + ".pickle")
+model = pickle.load(open(PATH, "rb"))
+flower_labels_to_names = {0: "setosa", 1: "versicolor", 2: "virginica"}
 
 
-class Input(BaseModel, Flower):
+class Flower(BaseModel):
     sepal_length: float
     sepal_width: float
     petal_length: float
     petal_width: float
 
 
-class Output(BaseModel):
-    predicted_class: int
-    predicted_name: str
+class PredictedFlower(BaseModel):
+    label: int
+    name: str
 
 
-@app.get("/print_flower/", response_model=Input)
-def print_flower() -> Input:
-    flower = Input(sepal_length=1.0, sepal_width=2.0, petal_length=3.0, petal_width=4.0)
-    print(flower)
+@app.get("/sample_flower/", response_model=Flower)
+def print_flower() -> Flower:
+    flower = Flower(sepal_length=1.0, sepal_width=2.0, petal_length=3.0, petal_width=4.0)
     return flower
 
 
-@app.post("/predict/", response_model=Output)
-def predict(flower: Input) -> Output:
-    return Output(predicted_class=flower.predict_class(model),
-                  predicted_name=flower.predict_name(model))
+@app.post("/predict/", response_model=PredictedFlower)
+def predict(flower: Flower) -> PredictedFlower:
+    flower_label = model.predict([[flower.sepal_length,
+                                   flower.sepal_width,
+                                   flower.petal_length,
+                                   flower.petal_width]])[0]
+    flower_name = flower_labels_to_names[flower_label]
+    return PredictedFlower(label=flower_label,
+                           name=flower_name)
