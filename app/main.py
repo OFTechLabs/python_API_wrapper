@@ -16,7 +16,7 @@ mimetypes.init()
 
 FILE_PATH = os.path.dirname(__file__)
 MODEL_DIR = os.path.join("model")
-MODEL_NAME = "DecisionTreeClassifier"
+MODEL_NAME = "model"
 PATH = os.path.join(FILE_PATH, MODEL_DIR, MODEL_NAME + ".pickle")
 model = pickle.load(open(PATH, "rb"))
 flower_labels_to_names = {0: "setosa", 1: "versicolor", 2: "virginica"}

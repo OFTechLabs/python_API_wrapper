@@ -5,7 +5,7 @@ from sklearn.datasets import load_iris
 from sklearn.tree import DecisionTreeClassifier
 
 MODEL_DIR = os.path.dirname(__file__)
-MODEL_NAME = "DecisionTreeClassifier"
+MODEL_NAME = "model"
 
 
 if __name__ == "__main__":
